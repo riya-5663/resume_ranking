@@ -101,36 +101,6 @@ Access the application at:
 
 http://127.0.0.1:8000/
 
-Production Deployment
-Recommended Settings Changes
-
-In settings.py:
-
-DEBUG = False
-ALLOWED_HOSTS = ['your-domain.com']
-
-
-Use environment variables for:
-
-SECRET_KEY
-
-DEBUG
-
-Database credentials
-
-Gunicorn (Production Server)
-
-Install Gunicorn:
-
-pipenv install gunicorn
-
-
-Run:
-
-gunicorn resume_ranking.wsgi
-
-Database (Production)
-
 The app is compatible with PostgreSQL.
 
 Example (settings.py):
