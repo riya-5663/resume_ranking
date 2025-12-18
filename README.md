@@ -7,19 +7,31 @@ This repository is structured and documented for local development as well as pr
 
 
 Features
+
 User registration and authentication
+
 Resume upload and storage
+
 Automated resume ranking logic
+
 Result visualization through web interface
+
 Django Admin dashboard for management
+
 Production-ready configuration support
 
 Tech Stack
+
 Backend: Python 3, Django
+
 Frontend: HTML, CSS, JavaScript
+
 Database: SQLite (development), PostgreSQL-ready (production)
+
 Dependency Management: Pipenv
+
 Static Handling: Django Staticfiles
+
 Deployment Ready: Gunicorn-compatible
 
 Project Structure
@@ -89,6 +101,35 @@ Access the application at:
 
 http://127.0.0.1:8000/
 
+Production Deployment
+Recommended Settings Changes
+
+In settings.py:
+
+DEBUG = False
+ALLOWED_HOSTS = ['your-domain.com']
+
+
+Use environment variables for:
+
+SECRET_KEY
+
+DEBUG
+
+Database credentials
+
+Gunicorn (Production Server)
+
+Install Gunicorn:
+
+pipenv install gunicorn
+
+
+Run:
+
+gunicorn resume_ranking.wsgi
+
+Database (Production)
 
 The app is compatible with PostgreSQL.
 
@@ -106,17 +147,27 @@ DATABASES = {
 }
 
 Security Considerations
+
 Do not commit .env files
+
 Rotate SECRET_KEY in production
+
 Use HTTPS in deployment
+
 Restrict Django Admin access
+
 Future Improvements
+
 NLP/ML-based resume scoring
+
 Role-based job descriptions
+
 Resume parsing (PDF/DOCX)
+
 Cloud storage for resumes
+
 CI/CD integration
 
-Contributors:
-Pratishtha
+Contributors
+Pratishtha,
 Riya
