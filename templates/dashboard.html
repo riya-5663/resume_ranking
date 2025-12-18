@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+<div class="col-md-3 col-lg-2 d-md-block sidebar">
+    <div class="position-sticky pt-3">
+        <div class="user-profile text-center mb-4">
+            <div class="avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h5 class="mt-2">Welcome, {{ user.username }}</h5>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+                    <i class="fas fa-home me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'upload' %}active{% endif %}" href="{% url 'upload_resume' %}">
+                    <i class="fas fa-upload me-2"></i>Upload Resume
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab == 'ranked' %}active{% endif %}" href="#">
+                    <i class="fas fa-chart-line me-2"></i>Ranking Score
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Your Resumes</h5>
+            </div>
+            <div class="card-body">
+                {% if resumes %}
+                    <div class="list-group">
+                        {% for resume in resumes %}
+                        <a href="{% url 'resume_score' resume.id %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">{{ resume.job.title }}</h6>
+                                <small>Score: {{ resume.score|floatformat:2 }}</small>
+                            </div>
+                            <small>Uploaded on {{ resume.uploaded_at|date:"M d, Y" }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>You haven't uploaded any resumes yet.</p>
+                    <a href="{% url 'upload_resume' %}" class="btn btn-primary">Upload Resume</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Available Jobs</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for job in jobs %}
+                    <div class="list-group-item">
+                        <h6>{{ job.title }}</h6>
+                        <small class="text-muted">{{ job.description|truncatechars:100 }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

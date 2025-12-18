@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+<div class="col-md-3 col-lg-2 d-md-block sidebar">
+    <div class="position-sticky pt-3">
+        <div class="user-profile text-center mb-4">
+            <div class="avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h5 class="mt-2">Welcome, {{ user.username }}</h5>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">
+                    <i class="fas fa-home me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'upload_resume' %}">
+                    <i class="fas fa-upload me-2"></i>Upload Resume
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="fas fa-chart-line me-2"></i>Ranking Score
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Resume Score for {{ resume.job.title }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Score Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="score-display">
+                    <div class="score-circle">
+                        <div class="score-value">{{ score|floatformat:2 }}</div>
+                        <div class="score-label">Total Score</div>
+                    </div>
+                </div>
+                
+                <div class="rank-display mt-4">
+                    <h6>Rank: {{ resume_rank }} out of {{ ranked_resumes|length }}</h6>
+                </div>
+                
+                <div class="progress mt-4" style="height: 30px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="{{ score }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ score|floatformat:2 }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Score Breakdown</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Required Skills
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.required_skills|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Preferred Skills
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.preferred_skill|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Experience
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.experience|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Education
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.education|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Job Description Match
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.job_description|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Projects
+                        <span class="badge bg-primary rounded-pill">{{ score_breakdown.projects|floatformat:2 }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5>Ranked Resumes for {{ job.title }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in ranked_resumes %}
+                    <tr {% if r.file_path == resume.file.path %}class="table-primary"{% endif %}>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ r.user }}</td>
+                        <td>{{ r.score|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

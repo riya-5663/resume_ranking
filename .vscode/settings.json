@@ -1,0 +1,19 @@
+{
+    "python.pythonPath": "C:\\Users\\HP-PC\\.virtualenvs\\resume_ranking-p79wWHAH\\Scripts\\python.exe",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": true,
+    "python.formatting.provider": "black",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}"
+    ],
+    "terminal.integrated.env.windows": {
+        "DJANGO_SETTINGS_MODULE": "resume_ranking.settings"
+    },
+    "terminal.integrated.env.linux": {
+        "DJANGO_SETTINGS_MODULE": "resume_ranking.settings"
+    },
+    "terminal.integrated.env.osx": {
+        "DJANGO_SETTINGS_MODULE": "resume_ranking.settings"
+    }
+}
